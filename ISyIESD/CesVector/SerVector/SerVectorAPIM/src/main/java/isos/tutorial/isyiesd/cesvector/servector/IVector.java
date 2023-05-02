@@ -17,5 +17,14 @@ public interface IVector {
 
     @WebMethod
     String invariantCheck();
+    
+    @WebMethod
+    boolean prepare();
+    
+    @WebMethod
+    void commit();
+    
+    @WebMethod
+    void rollback();
 
 }
