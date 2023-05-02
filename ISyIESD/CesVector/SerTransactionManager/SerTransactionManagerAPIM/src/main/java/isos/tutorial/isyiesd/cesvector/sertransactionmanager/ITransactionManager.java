@@ -5,9 +5,9 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
-@WebService(name = "ITest", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager")
+@WebService(name = "ITransactionManager", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager")
 @SOAPBinding(style = Style.DOCUMENT)
-public interface ITest {
+public interface ITransactionManager {
 	
 	@WebMethod
 	void sayHello();

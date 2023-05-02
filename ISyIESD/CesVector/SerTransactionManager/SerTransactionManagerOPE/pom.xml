@@ -118,7 +118,7 @@
 							<archive>
 								<manifest>
 									<mainClass>
-										isos.tutorial.isyiesd.cesvector.sertransactionmanager.TestServer
+										isos.tutorial.isyiesd.cesvector.sertransactionmanager.TMServer
 									</mainClass>
 								</manifest>
 							</archive>

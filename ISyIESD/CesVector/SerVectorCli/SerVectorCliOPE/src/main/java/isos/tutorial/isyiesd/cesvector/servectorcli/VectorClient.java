@@ -14,8 +14,8 @@ public class VectorClient {
         VectorService service = new VectorService();
         IVector port = service.getVectorPort();
         
-        TestService testServ = new TestService();
-        ITest port2 = testServ.getTestPort();
+        TransactionManagerService testServ = new TransactionManagerService();
+        ITransactionManager port2 = testServ.getTransactionManagerPort();
 
         port2.sayHello();
         int v, res;

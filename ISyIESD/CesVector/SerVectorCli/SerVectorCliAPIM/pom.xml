@@ -62,6 +62,13 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        <dependency>
+        	<groupId>
+        		isos.tutorial.isyiesd.cesvector.sertransactionmanager
+        	</groupId>
+        	<artifactId>SerTransactionManagerAPIM</artifactId>
+        	<version>0.1.0</version>
+        </dependency>
     </dependencies>
 
 	<build>
@@ -85,13 +92,13 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>wsimport TestService</id>
+						<id>wsimport TransactionManagerService</id>
 						<goals>
 							<goal>wsimport</goal>
 						</goals>
 						<configuration>
 							<wsdlUrls>
-								<wsdlUrl>http://localhost:2059/Test?wsdl</wsdlUrl>
+								<wsdlUrl>http://localhost:2059/TransactionManager?wsdl</wsdlUrl>
 							</wsdlUrls>
 							<sourceDestDir>${basedir}/src/main/java</sourceDestDir>
 						</configuration>
