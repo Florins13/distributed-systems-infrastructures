@@ -2,15 +2,13 @@ package isos.tutorial.isyiesd.cesvector.sertransactionmanager;
 
 import javax.jws.WebService;
 
-import isos.tutorial.isyiesd.cesvector.servector.IVector;
-import isos.tutorial.isyiesd.cesvector.servector.VectorService;
 
 @WebService(endpointInterface = "isos.tutorial.isyiesd.cesvector.sertransactionmanager.ITransactionManager")
 public class TransactionManager implements ITransactionManager{
 
 	private static TransactionManager instance;
 	
-
+	// should contain a list of transactions and pass the transaction id to the client
 	
     public static synchronized TransactionManager getInstance() {
         if (instance == null) {
