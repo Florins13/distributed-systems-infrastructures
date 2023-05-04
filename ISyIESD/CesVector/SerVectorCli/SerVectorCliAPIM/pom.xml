@@ -103,6 +103,18 @@
 							<sourceDestDir>${basedir}/src/main/java</sourceDestDir>
 						</configuration>
 					</execution>
+					<execution>
+						<id>wsimport SerTwoPhaseLockManagerService</id>
+						<goals>
+							<goal>wsimport</goal>
+						</goals>
+						<configuration>
+							<wsdlUrls>
+								<wsdlUrl>http://localhost:2060/Tplm?wsdl</wsdlUrl>
+							</wsdlUrls>
+							<sourceDestDir>${basedir}/src/main/java</sourceDestDir>
+						</configuration>
+					</execution>
 				</executions>
 				<dependencies>
 					<dependency>
