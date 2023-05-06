@@ -100,6 +100,8 @@
 							<wsdlUrls>
 								<wsdlUrl>http://localhost:2059/TransactionManager?wsdl</wsdlUrl>
 							</wsdlUrls>
+                            <bindingDirectory>${basedir}/src/main/resources/jaxws</bindingDirectory>
+                            <packageName>isos.tutorial.isyiesd.cesvector.sertransactionmanager</packageName>
 							<sourceDestDir>${basedir}/src/main/java</sourceDestDir>
 						</configuration>
 					</execution>
