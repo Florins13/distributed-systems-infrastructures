@@ -30,7 +30,7 @@
 		<module>SerVectorCli</module>
 	  	<module>SerTransactionManager</module>
     	<module>SerTwoPhaseLockManager</module>
-  </modules>
+  	</modules>
 
 	<dependencyManagement>
 		<dependencies>

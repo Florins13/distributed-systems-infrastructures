@@ -6,7 +6,7 @@ import isos.tutorial.isyiesd.cesvector.sertransactionmanager.TransactionManagerS
 import isos.tutorial.isyiesd.cesvector.sertransactionmanager.ITransactionManager;
 import isos.tutorial.isyiesd.cesvector.sertwophaselockmanager.*;
 
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Hello world!
@@ -15,16 +15,19 @@ public class VectorClient {
 
     public static void main(String[] args) throws InterruptedException {
 
+        Map<String, List<Integer>> desiredLockList = new HashMap<String, List<Integer>>();
+
         VectorService service = new VectorService();
         IVector vectorService1 = service.getVectorPort();
         
         TransactionManagerService testServ = new TransactionManagerService();
         ITransactionManager tmPort = testServ.getTransactionManagerPort();
 
-        
         TplmService tplm = new TplmService();
         ITplm tplmPort = tplm.getTplmPort();
-        tplmPort.acquireLock();
+
+        desiredLockList.put("vector1", Arrays.asList(0,2));
+        tplmPort.acquireLock(desiredLockList);
         System.out.println("Lock is" + tplmPort.checkLock());
         
         String transactionId = tmPort.begin();

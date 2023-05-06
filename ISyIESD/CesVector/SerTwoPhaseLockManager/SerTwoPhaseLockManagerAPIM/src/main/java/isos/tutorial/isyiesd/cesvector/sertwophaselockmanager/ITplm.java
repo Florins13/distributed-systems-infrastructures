@@ -1,6 +1,7 @@
 package isos.tutorial.isyiesd.cesvector.sertwophaselockmanager;
 
-import java.nio.channels.FileLock;
+import java.util.List;
+import java.util.Map;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -12,7 +13,7 @@ import javax.jws.soap.SOAPBinding.Style;
 public interface ITplm {
 
 	@WebMethod
-	FileLock acquireLock();
+	boolean acquireLock(Map<String, List<Integer>> desiredLockList);
 	
 	@WebMethod
 	boolean checkLock();
