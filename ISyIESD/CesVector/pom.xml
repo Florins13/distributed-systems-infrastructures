@@ -28,7 +28,7 @@
 	<modules>
 		<module>SerVector</module>
 		<module>SerVectorCli</module>
-	  <module>SerTransactionManager</module>
+	  	<module>SerTransactionManager</module>
   </modules>
 
 	<dependencyManagement>

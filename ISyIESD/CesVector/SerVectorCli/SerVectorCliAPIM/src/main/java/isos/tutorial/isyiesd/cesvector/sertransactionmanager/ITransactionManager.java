@@ -9,8 +9,6 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.ws.Action;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
-import sertransactionmanager.cesvector.isyiesd.isos.iesd21.ObjectFactory;
-import sertransactionmanager.cesvector.isyiesd.isos.iesd21.Transaction;
 
 
 /**
@@ -29,37 +27,52 @@ public interface ITransactionManager {
     /**
      * 
      * @return
-     *     returns sertransactionmanager.cesvector.isyiesd.isos.iesd21.Transaction
+     *     returns java.lang.String
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "begin", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "sertransactionmanager.cesvector.isyiesd.isos.iesd21.Begin")
-    @ResponseWrapper(localName = "beginResponse", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "sertransactionmanager.cesvector.isyiesd.isos.iesd21.BeginResponse")
+    @RequestWrapper(localName = "begin", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "isos.tutorial.isyiesd.cesvector.sertransactionmanager.Begin")
+    @ResponseWrapper(localName = "beginResponse", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "isos.tutorial.isyiesd.cesvector.sertransactionmanager.BeginResponse")
     @Action(input = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager/ITransactionManager/beginRequest", output = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager/ITransactionManager/beginResponse")
-    public Transaction begin();
+    public String begin();
 
     /**
      * 
      * @param arg0
      */
     @WebMethod
-    @RequestWrapper(localName = "commit", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "sertransactionmanager.cesvector.isyiesd.isos.iesd21.Commit")
-    @ResponseWrapper(localName = "commitResponse", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "sertransactionmanager.cesvector.isyiesd.isos.iesd21.CommitResponse")
+    @RequestWrapper(localName = "commit", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "isos.tutorial.isyiesd.cesvector.sertransactionmanager.Commit")
+    @ResponseWrapper(localName = "commitResponse", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "isos.tutorial.isyiesd.cesvector.sertransactionmanager.CommitResponse")
     @Action(input = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager/ITransactionManager/commitRequest", output = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager/ITransactionManager/commitResponse")
     public void commit(
         @WebParam(name = "arg0", targetNamespace = "")
-        Transaction arg0);
+        String arg0);
 
     /**
      * 
      * @param arg0
      */
     @WebMethod
-    @RequestWrapper(localName = "rollback", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "sertransactionmanager.cesvector.isyiesd.isos.iesd21.Rollback")
-    @ResponseWrapper(localName = "rollbackResponse", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "sertransactionmanager.cesvector.isyiesd.isos.iesd21.RollbackResponse")
+    @RequestWrapper(localName = "rollback", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "isos.tutorial.isyiesd.cesvector.sertransactionmanager.Rollback")
+    @ResponseWrapper(localName = "rollbackResponse", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "isos.tutorial.isyiesd.cesvector.sertransactionmanager.RollbackResponse")
     @Action(input = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager/ITransactionManager/rollbackRequest", output = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager/ITransactionManager/rollbackResponse")
     public void rollback(
         @WebParam(name = "arg0", targetNamespace = "")
-        Transaction arg0);
+        String arg0);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     */
+    @WebMethod
+    @RequestWrapper(localName = "joinTransaction", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "isos.tutorial.isyiesd.cesvector.sertransactionmanager.JoinTransaction")
+    @ResponseWrapper(localName = "joinTransactionResponse", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager", className = "isos.tutorial.isyiesd.cesvector.sertransactionmanager.JoinTransactionResponse")
+    @Action(input = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager/ITransactionManager/joinTransactionRequest", output = "http://iesd21.isos.isyiesd.cesvector.sertransactionmanager/ITransactionManager/joinTransactionResponse")
+    public void joinTransaction(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0,
+        @WebParam(name = "arg1", targetNamespace = "")
+        String arg1);
 
 }

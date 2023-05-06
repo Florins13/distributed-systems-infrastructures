@@ -59,11 +59,11 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
-        <dependency>
-        	<groupId>isos.tutorial.isyiesd.cesvector.servector</groupId>
-        	<artifactId>SerVectorAPIM</artifactId>
-        	<version>0.1.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--        	<groupId>isos.tutorial.isyiesd.cesvector.servector</groupId>-->
+<!--        	<artifactId>SerVectorAPIM</artifactId>-->
+<!--        	<version>0.1.0</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -95,6 +95,14 @@
             </plugin>
             <plugin>
                 <artifactId>maven-deploy-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>6</source>
+                    <target>6</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

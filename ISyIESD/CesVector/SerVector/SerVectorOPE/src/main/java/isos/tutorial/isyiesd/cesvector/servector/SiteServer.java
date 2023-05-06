@@ -14,6 +14,10 @@ public class SiteServer {
         Endpoint ep = Endpoint.create(new Vector());
         System.out.println("Starting SiteServer...");
         ep.publish("http://localhost:2058/Vector");
+
+        Endpoint ep1 = Endpoint.create(new Vector());
+        System.out.println("Starting SiteServer...");
+        ep1.publish("http://localhost:2062/Vector");
     }
 
 }
