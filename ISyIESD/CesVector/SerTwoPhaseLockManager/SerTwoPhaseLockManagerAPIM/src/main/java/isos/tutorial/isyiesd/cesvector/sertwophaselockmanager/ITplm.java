@@ -13,10 +13,10 @@ import javax.jws.soap.SOAPBinding.Style;
 public interface ITplm {
 
 	@WebMethod
-	boolean acquireLock(Map<String, List<Integer>> desiredLockList);
+	boolean acquireLocks(Map<String, List<Integer>> desiredLockList);
 	
 	@WebMethod
-	boolean checkLock();
+	boolean releaseLocks(Map<String, List<Integer>> releaseLockList);
 	
 	
 }

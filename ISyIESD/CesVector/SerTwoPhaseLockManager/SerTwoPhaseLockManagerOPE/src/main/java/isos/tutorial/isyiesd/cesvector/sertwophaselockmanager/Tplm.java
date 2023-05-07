@@ -1,7 +1,4 @@
 package isos.tutorial.isyiesd.cesvector.sertwophaselockmanager;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
@@ -15,7 +12,7 @@ import javax.jws.WebService;
 @WebService(endpointInterface = "isos.tutorial.isyiesd.cesvector.sertwophaselockmanager.ITplm")
 public class Tplm implements ITplm{
 
-	File file = new File("lock.txt");
+	final static String LOCK_PATH = "tplm_lock.txt";
 	Map<String, List<Integer>> lockList = new HashMap<String, List<Integer>>();
 
 	// Client -> pos 0 -> LOCK pos 1 -> lock.txt => LOCKED
@@ -27,41 +24,46 @@ public class Tplm implements ITplm{
 	}
 
 	@Override
-	public boolean acquireLock(Map<String, List<Integer>> desiredLockList) {
-//		if (!file.exists()) {
-//			try {
-//				file.createNewFile();
-//			} catch (IOException e) {
-//				throw new RuntimeException(e);
-//			}
-//		}
-		try (FileChannel channel = new RandomAccessFile(file, "rw").getChannel();
+	public boolean acquireLocks(Map<String, List<Integer>> desiredLockList) {
+		try (RandomAccessFile file  = new RandomAccessFile(LOCK_PATH, "rw");  FileChannel channel = file.getChannel();
 			 FileLock lock = channel.lock()){
 			System.out.println(channel.isOpen());
 			System.out.println(lock.isValid());
 			for (String vectorService: desiredLockList.keySet()){
 				if(!this.lockList.containsKey(vectorService))throw new Exception();
-
+				for (Integer pos: desiredLockList.get(vectorService)) {
+					if(lockList.get(vectorService).contains(pos))return false;
+				}
 			}
-			return lock.isValid();
+			for (String vectorService: desiredLockList.keySet()){
+				for (Integer pos: desiredLockList.get(vectorService)) {
+					lockList.get(vectorService).add(pos);
+				}
+			}
+			return true;
 		} catch (Exception e) {
-		      e.printStackTrace();
-			throw new RuntimeException(e);
+			System.out.println("Error");
+			return false;
 		}
 
 	}
 
 	@Override
-	public boolean checkLock() {
-		boolean checkLock = false;
-		try {
-			FileChannel channel = new RandomAccessFile(file, "rw").getChannel();
-			checkLock = channel.isOpen();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public boolean releaseLocks(Map<String, List<Integer>> releaseLockList) {
+		try (RandomAccessFile file  = new RandomAccessFile(LOCK_PATH, "rw");  FileChannel channel = file.getChannel();
+			 FileLock lock = channel.lock()){
+			System.out.println(channel.isOpen());
+			System.out.println(lock.isValid());
+			for (String vectorService: releaseLockList.keySet()){
+				for (Integer pos: releaseLockList.get(vectorService)) {
+					lockList.get(vectorService).remove(pos);
+				}
+			}
+			return true;
+		} catch (Exception e) {
+			System.out.println("Error");
+			return false;
 		}
-		return checkLock;
 	}
 
 }
