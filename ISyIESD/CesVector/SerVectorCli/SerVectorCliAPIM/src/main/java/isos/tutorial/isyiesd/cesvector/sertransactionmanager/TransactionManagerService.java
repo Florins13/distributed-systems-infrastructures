@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "TransactionManagerService", targetNamespace = "http://sertransactionmanager.cesvector.isyiesd.tutorial.isos/", wsdlLocation = "http://localhost:2059/TransactionManager?wsdl")
+@WebServiceClient(name = "TransactionManagerService", targetNamespace = "http://sertransactionmanager.cesvector.isyiesd.tutorial.isos/", wsdlLocation = "http://192.168.1.65:2059/TransactionManager?wsdl")
 public class TransactionManagerService
     extends Service
 {
@@ -30,7 +30,7 @@ public class TransactionManagerService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:2059/TransactionManager?wsdl");
+            url = new URL("http://192.168.1.65:2059/TransactionManager?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

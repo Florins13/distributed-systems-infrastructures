@@ -2,14 +2,13 @@
 package isos.tutorial.isyiesd.cesvector.sertwophaselockmanager;
 
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.ws.Action;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
-import sertwophaselockmanager.cesvector.isyiesd.isos.iesd21.FileLock;
-import sertwophaselockmanager.cesvector.isyiesd.isos.iesd21.ObjectFactory;
 
 
 /**
@@ -27,26 +26,32 @@ public interface ITplm {
 
     /**
      * 
-     * @return
-     *     returns sertwophaselockmanager.cesvector.isyiesd.isos.iesd21.FileLock
-     */
-    @WebMethod
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "acquireLock", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager", className = "sertwophaselockmanager.cesvector.isyiesd.isos.iesd21.AcquireLock")
-    @ResponseWrapper(localName = "acquireLockResponse", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager", className = "sertwophaselockmanager.cesvector.isyiesd.isos.iesd21.AcquireLockResponse")
-    @Action(input = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager/ITplm/acquireLockRequest", output = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager/ITplm/acquireLockResponse")
-    public FileLock acquireLock();
-
-    /**
-     * 
+     * @param arg0
      * @return
      *     returns boolean
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "checkLock", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager", className = "sertwophaselockmanager.cesvector.isyiesd.isos.iesd21.CheckLock")
-    @ResponseWrapper(localName = "checkLockResponse", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager", className = "sertwophaselockmanager.cesvector.isyiesd.isos.iesd21.CheckLockResponse")
-    @Action(input = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager/ITplm/checkLockRequest", output = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager/ITplm/checkLockResponse")
-    public boolean checkLock();
+    @RequestWrapper(localName = "acquireLocks", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager", className = "isos.tutorial.isyiesd.cesvector.sertwophaselockmanager.AcquireLocks")
+    @ResponseWrapper(localName = "acquireLocksResponse", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager", className = "isos.tutorial.isyiesd.cesvector.sertwophaselockmanager.AcquireLocksResponse")
+    @Action(input = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager/ITplm/acquireLocksRequest", output = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager/ITplm/acquireLocksResponse")
+    public boolean acquireLocks(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
+
+    /**
+     * 
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "releaseLocks", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager", className = "isos.tutorial.isyiesd.cesvector.sertwophaselockmanager.ReleaseLocks")
+    @ResponseWrapper(localName = "releaseLocksResponse", targetNamespace = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager", className = "isos.tutorial.isyiesd.cesvector.sertwophaselockmanager.ReleaseLocksResponse")
+    @Action(input = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager/ITplm/releaseLocksRequest", output = "http://iesd21.isos.isyiesd.cesvector.sertwophaselockmanager/ITplm/releaseLocksResponse")
+    public boolean releaseLocks(
+        @WebParam(name = "arg0", targetNamespace = "")
+        String arg0);
 
 }

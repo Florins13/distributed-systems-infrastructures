@@ -68,6 +68,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        <dependency>
+            <groupId>isos.tutorial.isyiesd.cesvector.sertransactionmanager</groupId>
+            <artifactId>SerTransactionManagerOPE</artifactId>
+            <version>0.1.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

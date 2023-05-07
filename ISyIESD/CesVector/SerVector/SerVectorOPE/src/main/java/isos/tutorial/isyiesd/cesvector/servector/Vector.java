@@ -2,23 +2,37 @@ package isos.tutorial.isyiesd.cesvector.servector;
 
 import isos.tutorial.isyiesd.cesvector.sertransactionmanager.ITransactionManager;
 import isos.tutorial.isyiesd.cesvector.sertransactionmanager.TransactionManagerService;
+import isos.tutorial.isyiesd.cesvector.sertransactionmanager.ZooKeeperHelper;
 
+import javax.annotation.PostConstruct;
 import javax.jws.WebService;
+import java.net.URL;
 import java.util.*;
 
 @WebService(endpointInterface = "isos.tutorial.isyiesd.cesvector.servector.IVector")
 public class Vector implements IVector {
 
-//	TransactionManagerService testServ = new TransactionManagerService();
-//	ITransactionManager tmService = testServ.getTransactionManagerPort();
+	TransactionManagerService testServ;
+	ITransactionManager tmService;
 
 	private final String serverIdentifier = "vectorService1";
 
     private static List<Integer> vector = Arrays.asList(300, 234, 56, 789);
 
 	private Map<String, TransactionState> transactionList = new HashMap<String, TransactionState>();
-    
-    private static List<Integer> cloneState = new ArrayList<Integer>();
+
+	@PostConstruct
+	public void init(){
+		String transactionManagerAddress = null;
+		try {
+			transactionManagerAddress = discoverService("TransactionManager");
+			System.out.println("TransactionManager address: " + transactionManagerAddress);
+			this.testServ = new TransactionManagerService(new URL(transactionManagerAddress));
+			this.tmService = testServ.getTransactionManagerPort();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
     @Override
     public int read(int pos, String transactionId) {
@@ -34,7 +48,7 @@ public class Vector implements IVector {
     public void write(int pos, int n, String transactionId) {
         System.out.println("Writing to transactionState in pos ->" + pos + "<- value ->" + n + "<- !" );
 		if(!transactionList.containsKey(transactionId)){
-//			tmService.joinTransaction(transactionId, serverIdentifier);
+			tmService.joinTransaction(transactionId, serverIdentifier);
 			TransactionState transactionState = new TransactionState();
 			transactionState.vectorState.put(pos,n);
 			transactionList.put(transactionId,transactionState);
@@ -59,8 +73,11 @@ public class Vector implements IVector {
 
 	@Override
 	public void commit(String transactionId) {
-		System.out.println("Commiting our cloneState to main one!");
-		Vector.vector = cloneState;
+		System.out.println("Commiting!");
+		System.out.println(transactionList.values());
+		System.out.println(transactionList.get(transactionId).vectorState.toString());
+		System.out.println(Vector.vector);
+		System.out.println("Commiting!");
 		transactionList.get(transactionId).vectorState.forEach((pos,value)-> Vector.vector.set(pos,value));
 		removeTransaction(transactionId);
 		System.out.println(Vector.vector.get(0));
@@ -73,7 +90,6 @@ public class Vector implements IVector {
 	@Override
 	public void rollback(String transactionId) {
 		System.out.println("Rolling back the cloneState, transaction aborted!");
-		Vector.cloneState = Vector.vector;
 		removeTransaction(transactionId);
 		System.out.println(Vector.vector.get(0));
 		System.out.println(Vector.vector.get(1));
@@ -85,5 +101,19 @@ public class Vector implements IVector {
 
 	public void removeTransaction(String transactionId){
 		this.transactionList.remove(transactionId);
+	}
+
+
+	public static String discoverService(String serviceName) throws Exception {
+		// TODO: to be moved to a zookeper package
+		ZooKeeperHelper zkHelper = new ZooKeeperHelper();
+		List<String> serviceAddresses = zkHelper.discoverService(serviceName);
+		zkHelper.close();
+
+		if (!serviceAddresses.isEmpty()) {
+			return serviceAddresses.get(0); // Select the first available service address
+		} else {
+			throw new IllegalStateException("No instances of service " + serviceName + " found");
+		}
 	}
 }
