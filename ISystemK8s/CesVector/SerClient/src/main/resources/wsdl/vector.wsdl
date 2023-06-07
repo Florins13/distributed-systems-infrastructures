@@ -1,0 +1,197 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://isos.cesvector.vectorserver" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="VectorService" targetNamespace="http://isos.cesvector.vectorserver">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://isos.cesvector.vectorserver" elementFormDefault="unqualified" targetNamespace="http://isos.cesvector.vectorserver" version="1.0">
+            <xs:element name="commit" type="tns:commit"/>
+            <xs:element name="commitResponse" type="tns:commitResponse"/>
+            <xs:element name="invariantCheck" type="tns:invariantCheck"/>
+            <xs:element name="invariantCheckResponse" type="tns:invariantCheckResponse"/>
+            <xs:element name="prepare" type="tns:prepare"/>
+            <xs:element name="prepareResponse" type="tns:prepareResponse"/>
+            <xs:element name="read" type="tns:read"/>
+            <xs:element name="readResponse" type="tns:readResponse"/>
+            <xs:element name="rollback" type="tns:rollback"/>
+            <xs:element name="rollbackResponse" type="tns:rollbackResponse"/>
+            <xs:element name="write" type="tns:write"/>
+            <xs:element name="writeResponse" type="tns:writeResponse"/>
+            <xs:complexType name="read">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:int"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="readResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="rollback">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="rollbackResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="prepare">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="prepareResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="commit">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="commitResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="invariantCheck">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="invariantCheckResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="write">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:int"/>
+                    <xs:element name="arg1" type="xs:int"/>
+                    <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="writeResponse">
+                <xs:sequence/>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="read">
+        <wsdl:part element="tns:read" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="commitResponse">
+        <wsdl:part element="tns:commitResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="rollback">
+        <wsdl:part element="tns:rollback" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="readResponse">
+        <wsdl:part element="tns:readResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="prepare">
+        <wsdl:part element="tns:prepare" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="prepareResponse">
+        <wsdl:part element="tns:prepareResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="invariantCheckResponse">
+        <wsdl:part element="tns:invariantCheckResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="commit">
+        <wsdl:part element="tns:commit" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="writeResponse">
+        <wsdl:part element="tns:writeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="rollbackResponse">
+        <wsdl:part element="tns:rollbackResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="invariantCheck">
+        <wsdl:part element="tns:invariantCheck" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="write">
+        <wsdl:part element="tns:write" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="IVector">
+        <wsdl:operation name="read">
+            <wsdl:input message="tns:read" name="read"> </wsdl:input>
+            <wsdl:output message="tns:readResponse" name="readResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="rollback">
+            <wsdl:input message="tns:rollback" name="rollback"> </wsdl:input>
+            <wsdl:output message="tns:rollbackResponse" name="rollbackResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="prepare">
+            <wsdl:input message="tns:prepare" name="prepare"> </wsdl:input>
+            <wsdl:output message="tns:prepareResponse" name="prepareResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="commit">
+            <wsdl:input message="tns:commit" name="commit"> </wsdl:input>
+            <wsdl:output message="tns:commitResponse" name="commitResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="invariantCheck">
+            <wsdl:input message="tns:invariantCheck" name="invariantCheck"> </wsdl:input>
+            <wsdl:output message="tns:invariantCheckResponse" name="invariantCheckResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="write">
+            <wsdl:input message="tns:write" name="write"> </wsdl:input>
+            <wsdl:output message="tns:writeResponse" name="writeResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="VectorServiceSoapBinding" type="tns:IVector">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="read">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="read">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="readResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="rollback">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="rollback">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="rollbackResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="prepare">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="prepare">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="prepareResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="commit">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="commit">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="commitResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="invariantCheck">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="invariantCheck">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="invariantCheckResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="write">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="write">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="writeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="VectorService">
+        <wsdl:port binding="tns:VectorServiceSoapBinding" name="IVectorPort">
+            <soap:address location="http://192.168.59.100:30224/service/VectorService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

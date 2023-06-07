@@ -1,0 +1,78 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://isos.cesvector.twophaselockmanager" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="Tplm" targetNamespace="http://isos.cesvector.twophaselockmanager">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://isos.cesvector.twophaselockmanager" elementFormDefault="unqualified" targetNamespace="http://isos.cesvector.twophaselockmanager" version="1.0">
+            <xs:element name="acquireLocks" type="tns:acquireLocks"/>
+            <xs:element name="acquireLocksResponse" type="tns:acquireLocksResponse"/>
+            <xs:element name="releaseLocks" type="tns:releaseLocks"/>
+            <xs:element name="releaseLocksResponse" type="tns:releaseLocksResponse"/>
+            <xs:complexType name="acquireLocks">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="acquireLocksResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="releaseLocks">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="releaseLocksResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="acquireLocks">
+        <wsdl:part element="tns:acquireLocks" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="acquireLocksResponse">
+        <wsdl:part element="tns:acquireLocksResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="releaseLocks">
+        <wsdl:part element="tns:releaseLocks" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="releaseLocksResponse">
+        <wsdl:part element="tns:releaseLocksResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="ITplm">
+        <wsdl:operation name="acquireLocks">
+            <wsdl:input message="tns:acquireLocks" name="acquireLocks"> </wsdl:input>
+            <wsdl:output message="tns:acquireLocksResponse" name="acquireLocksResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="releaseLocks">
+            <wsdl:input message="tns:releaseLocks" name="releaseLocks"> </wsdl:input>
+            <wsdl:output message="tns:releaseLocksResponse" name="releaseLocksResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="TplmSoapBinding" type="tns:ITplm">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="acquireLocks">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="acquireLocks">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="acquireLocksResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="releaseLocks">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="releaseLocks">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="releaseLocksResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="Tplm">
+        <wsdl:port binding="tns:TplmSoapBinding" name="ITplmPort">
+            <soap:address location="http://192.168.59.100:31834/service/Tplm"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

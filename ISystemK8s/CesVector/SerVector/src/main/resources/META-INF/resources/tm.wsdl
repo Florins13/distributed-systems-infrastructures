@@ -1,0 +1,132 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://isos.cesvector.sertransactionmanager" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="TransactionManagerService" targetNamespace="http://isos.cesvector.sertransactionmanager">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://isos.cesvector.sertransactionmanager" elementFormDefault="unqualified" targetNamespace="http://isos.cesvector.sertransactionmanager" version="1.0">
+            <xs:element name="begin" type="tns:begin"/>
+            <xs:element name="beginResponse" type="tns:beginResponse"/>
+            <xs:element name="commit" type="tns:commit"/>
+            <xs:element name="commitResponse" type="tns:commitResponse"/>
+            <xs:element name="joinTransaction" type="tns:joinTransaction"/>
+            <xs:element name="joinTransactionResponse" type="tns:joinTransactionResponse"/>
+            <xs:element name="rollback" type="tns:rollback"/>
+            <xs:element name="rollbackResponse" type="tns:rollbackResponse"/>
+            <xs:complexType name="begin">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="beginResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="joinTransaction">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                    <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="joinTransactionResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="commit">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="commitResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="rollback">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="rollbackResponse">
+                <xs:sequence/>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="begin">
+        <wsdl:part element="tns:begin" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="joinTransactionResponse">
+        <wsdl:part element="tns:joinTransactionResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="rollbackResponse">
+        <wsdl:part element="tns:rollbackResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="commit">
+        <wsdl:part element="tns:commit" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="joinTransaction">
+        <wsdl:part element="tns:joinTransaction" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="beginResponse">
+        <wsdl:part element="tns:beginResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="rollback">
+        <wsdl:part element="tns:rollback" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="commitResponse">
+        <wsdl:part element="tns:commitResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="ITransactionManager">
+        <wsdl:operation name="begin">
+            <wsdl:input message="tns:begin" name="begin"> </wsdl:input>
+            <wsdl:output message="tns:beginResponse" name="beginResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="joinTransaction">
+            <wsdl:input message="tns:joinTransaction" name="joinTransaction"> </wsdl:input>
+            <wsdl:output message="tns:joinTransactionResponse" name="joinTransactionResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="commit">
+            <wsdl:input message="tns:commit" name="commit"> </wsdl:input>
+            <wsdl:output message="tns:commitResponse" name="commitResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="rollback">
+            <wsdl:input message="tns:rollback" name="rollback"> </wsdl:input>
+            <wsdl:output message="tns:rollbackResponse" name="rollbackResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="TransactionManagerServiceSoapBinding" type="tns:ITransactionManager">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="begin">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="begin">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="beginResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="joinTransaction">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="joinTransaction">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="joinTransactionResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="commit">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="commit">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="commitResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="rollback">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="rollback">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="rollbackResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="TransactionManagerService">
+        <wsdl:port binding="tns:TransactionManagerServiceSoapBinding" name="ITransactionManagerPort">
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
