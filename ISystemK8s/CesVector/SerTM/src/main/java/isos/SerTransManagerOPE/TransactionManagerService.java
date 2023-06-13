@@ -15,23 +15,10 @@ import java.util.*;
 @WebService(endpointInterface = "isos.SerTransManagerAPIM.ITransactionManager", targetNamespace = "http://isos.cesvector.sertransactionmanager")
 public class TransactionManagerService implements ITransactionManager {
 
-//	private static TransactionManager instance;
-
 	private Map<String, IVector> resourceManagersIds = new HashMap<String, IVector>();
 
 	private Map<String, List<String>> activeTransactions = new HashMap<String, List<String>>();
 
-//    public static synchronized TransactionManager getInstance() {
-//        if (instance == null) {
-//            instance = new TransactionManager();
-//        }
-//        return instance;
-//    }
-
-//	@PostConstruct
-//	public void init(){
-//		initialiseResources();
-//	}
 
 	public void initialiseResources(){
 		VectorService service= new VectorService();;

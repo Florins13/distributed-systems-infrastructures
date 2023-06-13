@@ -33,11 +33,9 @@ public class Tplm implements ITplm {
 		System.out.println("Active locks: " + lockList.toString());
 		System.out.println("Acquiring lock for " + desiredLockListJson);
 		HashMap<String, ArrayList<Integer>> desiredLockList = jsonConverter(desiredLockListJson);
-		try (RandomAccessFile file  = new RandomAccessFile(LOCK_PATH, "rw");  FileChannel channel = file.getChannel();
+		try (RandomAccessFile file  = new RandomAccessFile(LOCK_PATH, "rw");
+			 FileChannel channel = file.getChannel();
 			 FileLock lock = channel.lock()){
-			System.out.println(channel.isOpen());
-			System.out.println(lock.isValid());
-
 			for (String vectorService: desiredLockList.keySet()){
 				if(!this.lockList.containsKey(vectorService)){
 					this.lockList.put(vectorService, new ArrayList<Integer>());
@@ -64,10 +62,9 @@ public class Tplm implements ITplm {
 	public boolean releaseLocks(String releaseLockListJson) {
 		System.out.println("Releasing lock for " + releaseLockListJson);
 		HashMap<String, ArrayList<Integer>> releaseLockList = jsonConverter(releaseLockListJson);
-		try (RandomAccessFile file  = new RandomAccessFile(LOCK_PATH, "rw");  FileChannel channel = file.getChannel();
+		try (RandomAccessFile file  = new RandomAccessFile(LOCK_PATH, "rw");
+			 FileChannel channel = file.getChannel();
 			 FileLock lock = channel.lock()){
-			System.out.println(channel.isOpen());
-			System.out.println(lock.isValid());
 			for (String vectorService: releaseLockList.keySet()){
 				for (Integer pos: releaseLockList.get(vectorService)) {
 					lockList.get(vectorService).remove(pos);

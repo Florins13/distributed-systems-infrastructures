@@ -24,18 +24,7 @@ public class VectorService implements IVector {
 
 	private Map<String, TransactionState> transactionList = new HashMap<String, TransactionState>();
 
-//	@PostConstruct
-//	public void init(){
-//		String transactionManagerAddress = null;
-//		try {
-//			transactionManagerAddress = discoverService("TransactionManager");
-//			System.out.println("TransactionManager address: " + transactionManagerAddress);
-//			this.testServ = new TransactionManagerService(new URL(transactionManagerAddress));
-//			this.tmService = testServ.getTransactionManagerPort();
-//		} catch (Exception e) {
-//			throw new RuntimeException(e);
-//		}
-//	}
+
 	@WebMethod
     @Override
     public int read(int pos, String transactionId) {
@@ -51,7 +40,6 @@ public class VectorService implements IVector {
     @Override
     public void write(int pos, int n, String transactionId) {
         System.out.println("Writing to transactionState in pos ->" + pos + "<- value ->" + n + "<- !" );
-		System.out.println("works my addtion");
 		if(!transactionList.containsKey(transactionId)){
 			TransactionManagerService testServ = new TransactionManagerService();
 			ITransactionManager tmService = testServ.getITransactionManagerPort();
@@ -112,6 +100,18 @@ public class VectorService implements IVector {
 		this.transactionList.remove(transactionId);
 	}
 
+	//	@PostConstruct
+//	public void init(){
+//		String transactionManagerAddress = null;
+//		try {
+//			transactionManagerAddress = discoverService("TransactionManager");
+//			System.out.println("TransactionManager address: " + transactionManagerAddress);
+//			this.testServ = new TransactionManagerService(new URL(transactionManagerAddress));
+//			this.tmService = testServ.getTransactionManagerPort();
+//		} catch (Exception e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
 
 //	public static String discoverService(String serviceName) throws Exception {
 //		// TODO: to be moved to a zookeper package

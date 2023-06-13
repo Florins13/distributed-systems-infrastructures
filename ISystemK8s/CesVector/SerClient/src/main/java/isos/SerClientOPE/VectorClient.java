@@ -18,8 +18,6 @@ import java.util.Map;
 
 @QuarkusMain
 public class VectorClient {
-
-    // test
     public static void main(String ... args) throws InterruptedException {
         Map<String, List<Integer>> desiredLockList = new HashMap<String, List<Integer>>();
         String lockJson;
@@ -36,7 +34,6 @@ public class VectorClient {
         ITplm tplmPort = tplm.getITplmPort();
 
         desiredLockList.put("vectorService1", Arrays.asList(0,2));
-        // TODO: temporary fix for the issue with sending object through contract
         try {
             lockJson = mapper.writeValueAsString(desiredLockList);
         } catch (JsonProcessingException e) {
