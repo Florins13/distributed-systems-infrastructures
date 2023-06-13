@@ -72,7 +72,8 @@
     </wsdl:binding>
     <wsdl:service name="Tplm">
         <wsdl:port binding="tns:TplmSoapBinding" name="ITplmPort">
-            <soap:address location="http://192.168.59.100:31834/service/Tplm"/>
+<!--            <soap:address location="http://localhost:2060/service/Tplm"/>-->
+            <soap:address location="http://192.168.59.100:30592/service/Tplm"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

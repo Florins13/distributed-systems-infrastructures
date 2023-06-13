@@ -127,6 +127,7 @@
     </wsdl:binding>
     <wsdl:service name="TransactionManagerService">
         <wsdl:port binding="tns:TransactionManagerServiceSoapBinding" name="ITransactionManagerPort">
+<!--            <soap:address location="http://localhost:2059/service/TransactionManagerService"/>-->
             <soap:address location="http://192.168.59.100:31275/service/TransactionManagerService"/>
         </wsdl:port>
     </wsdl:service>
