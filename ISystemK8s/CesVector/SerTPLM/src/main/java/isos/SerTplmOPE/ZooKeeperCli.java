@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.zookeeper.*;
+import org.apache.zookeeper.data.Stat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +41,6 @@ public class ZooKeeperCli {
         List<String> vectorList = this.zooKeeper.getChildren(LOCKS_ROOT_PATH, false);
         if (vectorList.isEmpty()) {
             createLocksForVectorService(toLockList);
-            System.out.println("Lock acquired for " + jsonToLock + " - " + zooKeeper.getChildren(LOCKS_ROOT_PATH,false));
             return true;
         } else {
             for(String vectorService: toLockList.keySet()){
@@ -53,7 +53,6 @@ public class ZooKeeperCli {
                 }
             }
             createLocksForVectorService(toLockList);
-            System.out.println("Lock acquired for " + jsonToLock + " - " + zooKeeper.getChildren(LOCKS_ROOT_PATH,false));
             return true;
         }
     }
@@ -61,9 +60,14 @@ public class ZooKeeperCli {
     private void createLocksForVectorService(HashMap<String, ArrayList<Integer>> toLockList) throws KeeperException, InterruptedException {
         for(String vectorService: toLockList.keySet()){
             String path = LOCKS_ROOT_PATH + "/" + vectorService;
-            zooKeeper.create(path, "".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+            Stat stat = this.zooKeeper.exists(path, true);
+            if(stat == null){
+                zooKeeper.create(path, "".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+            }
+
             for (int pos: toLockList.get(vectorService)){
                 zooKeeper.create(path + "/" + pos, "".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+                System.out.println("Lock acquired for - " + zooKeeper.getChildren(path,false));
             }
 
         }
@@ -78,12 +82,9 @@ public class ZooKeeperCli {
             for (Integer pos : releaseLockList.get(vectorService)) {
                 String lockPath = path + "/" + pos;
                 try {
+                    System.out.println("Deleting node " + pos + " - " + zooKeeper.getChildren(path,false));
                     this.zooKeeper.delete(lockPath, -1);
-                    if(this.zooKeeper.getChildren(path, false).isEmpty()){
-                        System.out.println("Deleting node " + zooKeeper.getChildren(LOCKS_ROOT_PATH,false));
-                        this.zooKeeper.delete(path, -1);
-                        System.out.println(zooKeeper.getChildren(LOCKS_ROOT_PATH,false));
-                    }
+                    this.zooKeeper.getChildren(path, true);
                 } catch (Exception e) {
                     System.out.println("Error in releasing locks!");
                     System.out.println(zooKeeper.getChildren(LOCKS_ROOT_PATH,false));

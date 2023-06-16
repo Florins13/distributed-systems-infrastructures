@@ -4,63 +4,55 @@ import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
-import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class ZookeeperClient {
-    private static final String ZK_HOST = "192.168.59.100:31363";
+import static isos.SerClientOPE.ClientOperations.VECTOR_SERVICE;
+
+public class ZookeeperClient implements Watcher{
+    private static final String ZK_HOST = "192.168.59.100:31134";
     private static final int SESSION_TIMEOUT = 3000;
-    private ZooKeeper zk;
+
+    private ZooKeeper zk = new ZooKeeper(ZK_HOST, SESSION_TIMEOUT, null);
 
     private ClientOperations clientOpe = new ClientOperations();
 
     ClientOperations cliOpe = new ClientOperations();
 
     public ZookeeperClient() throws IOException, InterruptedException, KeeperException {
-        zk = new ZooKeeper(ZK_HOST, SESSION_TIMEOUT, this::watcherCallback);
     }
 
-    private void watcherCallback(WatchedEvent event) {
-        // If a node gets deleted, it means the lock is released
-        if (event.getType() == Watcher.Event.EventType.NodeDeleted) {
+    @Override
+    public void process(WatchedEvent event) {
+        if (event.getType() == Event.EventType.ChildWatchRemoved) {
+            try {
+                watchForNodeChanges(event.getPath());
+            } catch (KeeperException | InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void setWatcherToNode(String nodePath, String lockJson) throws KeeperException, InterruptedException {
-        Stat stat = this.zk.exists(nodePath, new Watcher() {
-            @Override
-            public void process(WatchedEvent event) {
-                if (event.getType() == Event.EventType.NodeDeleted) {
-                    System.out.println("Node " + event.getPath() + " has been deleted");
-                }
-                try {
-                    setWatcherToNode(nodePath, lockJson);
-                } catch (KeeperException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        if (stat == null) {
-            System.out.println("Node " + nodePath + " does not exist");
-            cliOpe.acquireLock(lockJson);
+    public void watchForNodeChanges(String path) throws KeeperException, InterruptedException {
+        List<Integer> children = zk.getChildren(path, this).stream().map(Integer::parseInt).collect(Collectors.toList());
+        if(Collections.disjoint(children, cliOpe.desiredLockList.get(VECTOR_SERVICE))){
+            cliOpe.acquireLock();
             cliOpe.performOperations();
-            cliOpe.releaselock(lockJson);
+            cliOpe.releaseLock();
+            System.out.println("Client ended transactions!");
             this.zk.close();
         }
-    }
-
-
-    private void performTransaction(){
-        try {
-            clientOpe.performOperations();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println("Znodes of root znode " + path + "are : " + children);
     }
 
     public void close() throws InterruptedException {
         this.zk.close();
     }
+
+
 }

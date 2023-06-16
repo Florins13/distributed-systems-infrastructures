@@ -15,6 +15,12 @@ import java.util.List;
 import java.util.Map;
 
 public class ClientOperations {
+
+    public static final String LOCKS_ROOT_PATH = "/locks/";
+    public static final String VECTOR_SERVICE = "vectorService1";
+
+    Map<String, List<Integer>> desiredLockList = new HashMap<String, List<Integer>>();
+
     VectorService service = new VectorService();
     IVector vectorService1 = service.getIVectorPort();
 
@@ -22,12 +28,18 @@ public class ClientOperations {
     ITransactionManager tmPort = testServ.getITransactionManagerPort();
 
     Tplm tplm = new Tplm();
-    public ClientOperations() {
-    }
-
     ITplm tplmPort = tplm.getITplmPort();
 
-
+    ObjectMapper mapper = new ObjectMapper();
+    String lockJson;
+    public ClientOperations() {
+        desiredLockList.put(VECTOR_SERVICE, Arrays.asList(0,2));
+        try {
+            lockJson = mapper.writeValueAsString(this.desiredLockList);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void performOperations() throws InterruptedException {
 
@@ -52,11 +64,11 @@ public class ClientOperations {
         tmPort.commit(transactionId);
     }
 
-    public boolean acquireLock(String lockJson){
-        return tplmPort.acquireLocks(lockJson);
+    public boolean acquireLock(){
+        return tplmPort.acquireLocks(this.lockJson);
     }
 
-    public void releaselock(String lockJson){
-        tplmPort.releaseLocks(lockJson);
+    public void releaseLock(){
+        tplmPort.releaseLocks(this.lockJson);
     }
 }
